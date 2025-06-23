@@ -23,6 +23,7 @@ from google.adk.tools.agent_tool import AgentTool
 
 from .sub_agents import ds_agent, db_agent
 
+from data_science.sub_agents.bigquery.tools import get_bq_client
 
 async def call_db_agent(
     question: str,
@@ -69,3 +70,24 @@ async def call_ds_agent(
     )
     tool_context.state["ds_agent_output"] = ds_agent_output
     return ds_agent_output
+
+def write_to_bq(dml_statement: str, tool_context: ToolContext): 
+
+    # Execute the DML statement within a transaction
+
+    print("Conteudo de dml_statement: ", dml_statement)
+
+    try:
+        query_job = get_bq_client().query(dml_statement)
+        query_job.result()
+
+        if query_job.state == 'DONE' and not query_job.errors:
+            print(f"DML de inserção executada com sucesso. Linhas afetadas: {query_job.num_dml_affected_rows}")
+        else:
+            print(f"Erro ao executar a DML de inserção: {query_job.errors}")
+            # Você pode inspecionar query_job.errors para mais detalhes
+            if query_job.error_result:
+                print(f"Detalhes do erro: {query_job.error_result}")
+
+    except Exception as e:
+        print(f"Ocorreu um erro: {e}")

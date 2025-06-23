@@ -1,0 +1,47 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "Codigo Produto",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Descricao Produto",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Tipo Produto",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Data Ocorrencia",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Regional",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Valor Cobrado",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Valor Correto",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Valor Calculado",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "Justificativa",
+    "type": "STRING"
+  }
+]

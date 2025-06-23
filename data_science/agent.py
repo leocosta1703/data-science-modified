@@ -26,12 +26,12 @@ from google.adk.agents import Agent, SequentialAgent
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.tools import load_artifacts, agent_tool
 
-from .sub_agents import db_ds_multiagent 
+from .sub_agents import db_ds_multiagent, db_agent 
 from .sub_agents.bigquery.tools import (
     get_database_settings as get_bq_database_settings,
 )
 from .prompts import return_glosa_assistant_instructions_root
-from .tools import call_db_agent, call_ds_agent
+from .tools import call_db_agent, write_to_bq
 
 date_today = date.today()
 
@@ -66,19 +66,21 @@ root_agent = Agent(
     instruction=return_glosa_assistant_instructions_root(),
     global_instruction=(
         f"""
-        Você é uma analista de ocorrências de glosas da Rede D'Or. Sua função é gerar uma análise explicando porque a glosa ocorreu.
+        Você é uma analista de ocorrências de glosas da Rede D'Or. Sua função é gerar uma análise explicando porque uma glosa ocorreu.
 
-        Sua resposta deverá ser em formato CSV. Você pode analisar uma glosa somente ou diversas glosas, de acordo com o que for pedido.
+        Antes de começar a analisar, sempre informe quantas ocorrencias encontrou e que serão analisadas.
 
-        Não deve responder a outros pedidos que não sejam relacionados com análise de glosa. Nesses casos, responda que está fora da sua alçada.
+        Se solicitado um relatorio do resultado da analise, gere em formato markdown e seja suscinto na resposta.
+       
+        Não deve responder a outros pedidos que não sejam relacionados com análise de glosa e armazenar resultados da analise. Nesses casos, responda que está fora da sua alçada.
 
         Só inicie uma análise de glosa se for explicitamente pedido.
 
         Todays date: {date_today}
         """
     ),
-    sub_agents=[],
-    tools=[agent_tool.AgentTool(agent=db_ds_multiagent),load_artifacts],
+    sub_agents=[db_agent],
+    tools=[agent_tool.AgentTool(agent=db_ds_multiagent),load_artifacts, call_db_agent, write_to_bq],
     before_agent_callback=setup_before_agent_call,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

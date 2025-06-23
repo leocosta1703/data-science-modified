@@ -1,0 +1,27 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "CONVENIO",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "MATERIAIS ",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ONCOLOGICOS",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "MEDICAMENTOS",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "EXCECAO",
+    "type": "STRING"
+  }
+]

@@ -17,11 +17,6 @@
 import logging
 import os
 
-import sys
-
-# Add the parent directory to the sys.path to allow importing the agent module
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
 import vertexai
 from absl import app, flags
 from data_science.agent import root_agent
